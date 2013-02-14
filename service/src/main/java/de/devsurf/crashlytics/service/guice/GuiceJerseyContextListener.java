@@ -23,6 +23,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
 import com.sun.jersey.api.core.PackagesResourceConfig;
+import com.sun.jersey.api.core.ResourceConfig;
 import com.sun.jersey.api.json.JSONConfiguration;
 import com.sun.jersey.guice.JerseyServletModule;
 import com.sun.jersey.guice.spi.container.servlet.GuiceContainer;
@@ -44,6 +45,17 @@ public class GuiceJerseyContextListener extends GuiceServletContextListener {
 				// Use jersey class path scanning
 				Map<String, String> params = new HashMap<String, String>();
 				params.put(PackagesResourceConfig.PROPERTY_PACKAGES, Constants.REST_PACKAGE);
+				
+				// jersey request filters
+				StringBuilder requestFilters = new StringBuilder();
+				requestFilters
+							.append("com.sun.jersey.api.container.filter.LoggingFilter");
+
+				params.put(ResourceConfig.PROPERTY_CONTAINER_REQUEST_FILTERS,
+						requestFilters.toString());
+				
+				params.put("com.sun.jersey.config.feature.logging.DisableEntitylogging",
+						Boolean.toString(false));
 
 				// json mapping via jackson
 				params.put(JSONConfiguration.FEATURE_POJO_MAPPING, "true");

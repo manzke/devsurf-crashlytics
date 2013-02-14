@@ -18,21 +18,27 @@ package de.devsurf.crashlytics.service.api;
 
 import java.net.URL;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Payload {
 	@JsonProperty("display_id")
 	private String displayId;
 	@JsonProperty
-	private String title;
+	private String library;
 	@JsonProperty
-	private String method;
+	private String title;
 	@JsonProperty("impact_level")
 	private int impactLevel;
+	@JsonProperty
+	private String method;
 	@JsonProperty("crashes_count")
 	private long crashesCount;
 	@JsonProperty("impacted_devices_count")
 	private long impactedDevicesCount; 
+	@JsonProperty("app")
+	private App app;
 	@JsonProperty("url")
 	private URL link;
 
@@ -61,6 +67,14 @@ public class Payload {
 
 	public final long getImpactedDevicesCount() {
 		return impactedDevicesCount;
+	}
+	
+	public App getApp() {
+		return app;
+	}
+	
+	public String getLibrary() {
+		return library;
 	}
 
 	public final URL getLink() {
@@ -94,16 +108,26 @@ public class Payload {
 	protected final void setLink(URL link) {
 		this.link = link;
 	}
+	
+	protected final void setApp(App app) {
+		this.app = app;
+	}
+	
+	protected final void setLibrary(String library) {
+		this.library = library;
+	}
 
 	@Override
 	public String toString() {
 		return "Payload ["
 				+ (displayId != null ? "displayId=" + displayId + ", " : "")
+				+ (library != null ? "library=" + library + ", " : "")
 				+ (title != null ? "title=" + title + ", " : "")
+				+ "impactLevel=" + impactLevel + ", "
 				+ (method != null ? "method=" + method + ", " : "")
-				+ "impactLevel=" + impactLevel + ", crashesCount="
-				+ crashesCount + ", impactedDevicesCount="
+				+ "crashesCount=" + crashesCount + ", impactedDevicesCount="
 				+ impactedDevicesCount + ", "
+				+ (app != null ? "app=" + app + ", " : "")
 				+ (link != null ? "link=" + link : "") + "]";
 	}
 }

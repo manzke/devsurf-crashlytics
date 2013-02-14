@@ -23,27 +23,27 @@ import org.junit.Test;
 public class WebHookTests extends RestTestBase {
 	@Test
 	public void testVerification() throws Exception {
-		String json = "{" +
-					  "\"event\": \"verification\"," +
-					  "\"payload_type\": \"none\"" +
-					  "}";
+		String json = "{" + "\"event\": \"verification\","
+				+ "\"payload_type\": \"none\"" + "}";
 		performPost(WEBHOOK_PATH, json, Response.Status.OK);
 	}
-	
+
+	@Test
+	public void testNewIssue() {
+		String json = "{\"event\":\"issue_impact_change\",\"payload_type\":\"issue\",\"payload\":{\"display_id\":6,\"library\":\"sdb\",\"title\":\"SettingsViewViewController.m line 386\",\"title_html\":\"<span class=\\\"issue_file truncatable\\\">SettingsViewViewController.m</span> <span class=\"issue_line\">line 386</span>\",\"impact_level\":1,\"method\":\"-[SettingsViewViewController addEmptyUser:]\",\"crashes_count\":1,\"impacted_devices_count\":1,\"app\":{\"name\":\"sdb\",\"bundle_identifier\":\"com.saperion.sdb\"},\"url\":\"https://crashlytics.com/saperion-ag/ios/apps/com.saperion.sdb/issues/511d6f5075fcaa6b0cb2189f\"}}";
+		performPost(WEBHOOK_PATH, json, Response.Status.OK);
+	}
+
 	@Test
 	public void testIssue() throws Exception {
-		String json = "{" + 
-					  "\"event\": \"issue_impact_change\"," +
-					  "\"payload_type\": \"issue\"," +
-					  "\"payload\": {" +
-					  "\"display_id\": 123," +
-					  "\"title\": \"Issue Title\" ," +
-					  "\"method\": \"methodName of issue\"," +
-					  "\"impact_level\": 2," +
-					  "\"crashes_count\": 54," +
-					  "\"impacted_devices_count\": 16," +
-					  "\"url\": \"http://crashlytics.com/full/url/to/issue\"" +
-					  "}}";
+		String json = "{" + "\"event\": \"issue_impact_change\","
+				+ "\"payload_type\": \"issue\"," + "\"payload\": {"
+				+ "\"display_id\": 123," + "\"title\": \"Issue Title\" ,"
+				+ "\"method\": \"methodName of issue\","
+				+ "\"impact_level\": 2," + "\"crashes_count\": 54,"
+				+ "\"impacted_devices_count\": 16,"
+				+ "\"url\": \"http://crashlytics.com/full/url/to/issue\""
+				+ "}}";
 		performPost(WEBHOOK_PATH, json, Response.Status.OK);
 	}
 }
