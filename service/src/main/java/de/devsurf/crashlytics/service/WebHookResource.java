@@ -42,9 +42,7 @@ public class WebHookResource {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String call(WebHookEvent event) {
-		System.out.println(event);
-
-		return "jersey-system-08.11.2012";
+	public void call(WebHookEvent event) {
+		LOGGER.info("Received following event by crashlytics: "+event);
 	}
 }
